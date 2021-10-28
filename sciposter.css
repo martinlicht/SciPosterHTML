@@ -64,6 +64,7 @@ Currently: leave everything as it is.
 /* LAYOUT */
 	
 /* https://cssreference.io/flexbox/ */
+/* https://stackoverflow.com/questions/7549561/section-vs-article-html5 */
 
 body 
 {
@@ -223,6 +224,11 @@ body
 }
 
 .email
+{
+	font-family: "Roboto Mono", monospace;
+}
+
+.comment
 {
 	font-family: "Roboto Mono", monospace;
 }
