@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+
+		<!-- standard line to set the encoding... -->
+        <meta charset="utf-8">
+        
+		<!-- ensure the correct viewport size -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- include the CSS stylesheet -->
+		<link href="sciposter.css" rel="stylesheet">
+        
+		<!-- include the MathJax script (asynchronously) with TeX and MML support -->
+		<!-- include support for older browsers -->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+
+		<!-- Download the Google fonts -->
+		
+		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+		<link href="https://fonts.googleapis.com" rel="preconnect">
+	
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+		
+		
+		<!-- Title -->
+		
+		<title>
+            Local Finite Element Approximation of Sobolev Differential Forms
+        </title>
+        
+	</head>
+
+    <body>
+		<header role=banner>
+			
+			<!-- Left part of the title -->
+            <div style="text-align:left; display:flex; flex-direction: column; justify-content: space-between;">
+                
+				<div style="font-size:4.5rem; font-weight: 600; max-width: 67rem; hyphens:auto; font-style: bold;">
+					Local Finite Element Approximation of Sobolev Differential Forms
+                </div>
+                
+				<div style="font-size:2rem; margin-bottom: 1.5rem; margin-top: 0.75rem; color:#444;">
+                    Martin Licht
+					&ensp;&ndash;&ensp;
+					EPF Lausanne
+					&ensp;&ndash;&ensp;
+					<span class="email">
+						martin.licht@epfl.ch
+					</span> 
+                </div>
+                
+				<div style="font-size:2rem; margin-bottom: 0.00rem; margin-top: 0.75rem; color: #444;">
+					joint work with Evan Gawlik (UH Manoa) and Michael Holst (UC San Diego),
+					to appear in <i>ESAIM: M2AN</i>.
+				</div>
+				
+            </div>
+			
+			<!-- Right part of the title -->
+			<div style=" text-align:right; flex-shrink: 0; max-width: 37.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+				
+				<!--<div style="margin-top: 1.5rem; margin-bottom: 0.5rem; display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+					<img style="height: 4rem; width: auto;" src="epfllogo.svg" alt="EPFL logo">
+				</div>-->
+				
+				<div style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: flex-end;">
+										
+					<img src="qrcode.svg" style="height:7rem;" alt="Arxiv version">
+					
+				</div>
+				
+			</div>
+			
+        </header>
+
+        <main role=main>
+            
+            <!-- First column -->
+			<div class=spalte style="width: 30%;">
+            
+				<article style="border-style: dashed; border-width: 0.25rem; border-color: #FF80A5; background-color: white;">
+					
+					<header style="background-color: white; color:dimgrey;">
+						Abstract
+					</header>
+					
+					<p style="hyphens: auto; text-align: justify;">
+						We address fundamental aspects in the approximation theory of vector-valued finite element methods, using finite element exterior calculus as a unifying framework. We generalize the Clément interpolant and the Scott-Zhang interpolant to finite element differential forms, and we derive a broken Bramble-Hilbert Lemma. Our interpolants require only minimal smoothness assumptions and respect partial boundary conditions. This permits us to state local error estimates in terms of the mesh size. Our theoretical results apply to curl-conforming and divergence-conforming finite element methods over simplicial triangulations.
+					</p>
+					
+				</article>
+
+				<article>
+					
+					<header style="background-color: #FFE08C; color:black;">
+						Problem setting
+					</header>
+					
+					<ul>
+						<li>The Cl&eacute;ment and Scott-Zhang interpolants are standard tools in finite element theory</li>
+						<li>Surprisingly, the literature only provides them for scalar-valued finite elements</li>
+						<li>Extending the Cl&eacute;ment and Scott-Zhang interpolants to 
+						vector-valued finite elements comes with new mathematical challenges
+						</li>
+						<li>We also want to generalize a recent result by Veeser (broken Bramble-Hilbert lemma) to vector-valued finite elements</li>
+					</ul>
+					
+				</article>
+
+				<article>
+					
+					<header style="background-color: #FFE08C; color:black;">
+						Goals
+					</header>
+					
+					<p>
+						Generalization to vector-valued finite element spaces of 
+						<ol>
+							<li>Cl&eacute;ment Interpolant</li>
+							<li>Scott-Zhang Interpolant</li>
+							<li>Broken Bramble-Hilbert lemma</li>
+						</ol>
+					</p>
+					
+					<p style="text-align: center; border-color: #FF80A5; border-style: solid; border-width: 0.25rem; padding: 0.5em">
+						<strong>We formulate our results in the framework of finite element differential forms.</strong>
+					</p>
+					
+				</article>
+
+				<article style="display: block;">
+					
+					<header>
+						Cl&eacute;ment Interpolant (Scalar fields)
+					</header>
+					
+					<div style="display:none">
+						$$
+						\newcommand{\boldphi}{\boldsymbol{\phi}}
+						\newcommand{\Ned}{\mathbf{Ned}}
+						\newcommand{\bfH}{\mathbf{H}}
+						\newcommand{\calJ}{\mathcal{J}}
+						\newcommand{\calP}{\mathcal{P}}
+						\newcommand{\calT}{\mathcal{T}}
+						\newcommand{\calU}{\mathcal{U}}
+						\newcommand{\calW}{\mathcal{W}}
+						\newcommand{\myscalar}{u}
+						\newcommand{\myvector}{\mathbf{u}}
+						\newcommand{\cartan}{\mathop{\rm d}\nolimits}
+						\newcommand{\curl}{\mathop{\bf curl}\nolimits}
+						\newcommand{\ext}{\mathop{\rm ext}\nolimits}
+						\newcommand{\Patch}{T^\ast}
+						\newcommand{\Clement}{\mathcal{I}}
+						\newcommand{\Scottzhang}{\mathcal{J}}
+						$$
+					</div>
+					
+					<p>
+						Let \(\calP_r(\calT)\) be the degree \(r\) Lagrange space
+						with respect to some triangulation \(\calT\).
+					<p/>
+					
+					<p>
+						A scalar function \(\myscalar\) in a Sobolev space \(W^{r+1,p}\)
+						can be approximated locally by Lagrange elements of degree \(r\).
+					<p/>
+					
+					<p>
+						Namely, the Cl&eacute;ment interpolant 
+						\(\Clement : W^{r+1,p} \rightarrow \calP_r(\calT)\)
+						estimates the approximation error over a tetrahedron \(T\)
+						by the Sobolev norm over the local patch \(\Patch\):
+					<p/>
+					
+					<p>
+						$$
+							\| \myscalar - \Clement \myscalar \|_{L^p(T)}
+							\leq 
+							C
+							h_{T}^{r+1}
+							| \myscalar |_{W^{r+1,p}( \Patch )}
+						$$
+					</p>
+					
+					<p>
+						<strong>This is standard. </strong>
+						Similarly
+						when homogeneous boundary conditions are imposed.
+					</p>
+					
+					<div style="display: flex; flex-wrap: wrap; flex-direction: row; align-items: center; justify-content: space-around;">
+						
+						<div style="">
+							<img style="height: 8rem; margin: 0 0" src="dummy.svg" alt="Some Function" />
+						</div>
+						
+						<div style="display: flex; flex-direction: column; max-width: 50%; flex-shrink: 10; justify-content: space-around;">
+							
+							<p style="border-color: #FF80A5; border-style: solid; border-width: 0.25rem; padding: 0.5em;"><strong>
+								This is well known for scalar functions and Lagrange elements.
+							</strong></p>
+							<!-- <br /> -->
+							
+							<p style="padding: 0.5em;"><strong>
+								Do we actually know how to do it for curl-conforming and divergence-conforming finite element spaces?
+							</strong></p>
+						</div>
+					</div>
+					
+				</article>
+				
+            </div>
+            
+			
+			
+			<!-- Second column -->
+			<div class=spalte style="width: 30%;">
+            
+				<article style="border-color: #11CFA9; border-width: 0.25rem; border-style: solid;">
+					
+					<p style="padding: 0.5em;"><strong>
+						Curl-conforming and divergence-conforming finite element spaces
+						carry tangential and normal boundary conditions, respectively.
+						<br/>
+						<br/>
+					
+						Thus the Cl&eacute;ment interpolant requires qualitatively different techniques.
+						<br/>
+						<br/>
+					
+						Bonus: resolving those issues easily enables the Scott-Zhang and the broken Bramble-Hilbert lemma too.
+					</strong></p>
+					
+				</article>
+					
+				<article style="display: block;">
+					
+					<header>
+						Cl&eacute;ment Interpolant (Vector fields)
+					</header>
+					
+					<p>
+						The Cl&eacute;ment interpolant without boundary conditions 
+						easily generalizes to N&eacute;d&eacute;lec elements.
+					<p/>
+					
+					<p>
+						Let \(\Ned_r(\calT)\) be the degree \(r\) N&eacute;d&eacute;lec space
+						with respect to some triangulation \(\calT\).
+						<!-- <p/> -->
+						<!-- <p> -->
+						Any vector field \( \myvector \in \bfH(\curl) \) 
+						with coefficients in \(W^{r+1,p}\)
+						can be approximated locally by N&eacute;d&eacute;lec fields.
+					<p/>
+					
+					<p>
+						Namely, the Cl&eacute;ment interpolant 
+						\(\Clement : \bfH(\curl) \rightarrow \Ned_r(\calT)\)
+						estimates the approximation error over a tetrahedron \(T\)
+						by the Sobolev norm over the local patch \(\Patch\):
+					<p/>
+					
+					<p>
+					$$
+						\| \myvector - \Clement \myvector \|_{L^p(T)}
+						\leq 
+						C
+						h_{T}^{r+1}
+						| \myvector |_{W^{r+1,p}( \Patch )}
+					$$
+					</p>
+
+					<p>
+						But what if we impose tangential boundary conditions?
+					</p>
+					
+				</article>
+
+				<article>
+					
+					<header>
+						Boundary Traces in \( \bfH(\curl) \)
+					</header>
+					
+					<p style="text-align: center; border-color: #FF80A5; border-width: 0.25rem; border-style: solid; ; padding: 0.5em">
+					<strong>
+						The classical Sobolev trace theory 
+						does not apply to \( \bfH(\curl) \).
+					</strong>
+					</p>
+					
+					<p>
+						The boundary trace of \( \myvector \in \bfH(\curl) \) 
+						is generally defined as a functional:
+					</p>
+					
+					<p>
+						$$
+							\oint_{\partial T} \langle \myvector_{\tan}, \boldphi \rangle
+							= 
+							\int_{T} \langle \curl \myvector, \ext \boldphi \rangle
+							-
+							\int_{T} \langle \myvector, \curl \ext \boldphi \rangle
+						$$
+					</p>
+					
+					<p>
+						where \( \boldphi \) is a tangential test vector field and \( \ext\boldphi \) is its extension.
+					</p>
+					
+					<p>
+						This research has developed a localized basis of \(\Ned_r(\calT,\Gamma)\)
+						and biorthogonal degrees of freedom.
+					</p>
+					
+					<p>
+						Furthermore, the degrees of freedom along \(\Gamma\)
+						are represented as boundary integrals 
+						using the aforementioned integration-by-parts formula.
+					</p>
+					
+				</article>
+
+				<article style="display: block;">
+					
+					<header>
+						Cl&eacute;ment Interpolant (Vector fields) with boundary conditions
+					</header>
+					
+					<p>
+						Let \(\Ned_r(\calT,\Gamma)\) be the N&eacute;d&eacute;lec space
+						with boundary conditions along \(\Gamma\).
+					</p>
+					
+					<p>
+						Let \( \myvector \in \bfH(\curl,\Gamma) \) 
+						with boundary conditions along \(\Gamma\).
+						Assume that \( \myvector \in W^{r+1,p} \).
+					<p/>
+					
+					<p>
+						Our Cl&eacute;ment-type interpolant 
+						\(\Clement : \bfH(\curl,\Gamma) \rightarrow \Ned_r(\calT,\Gamma)\)
+						with boundary conditions leaves out the DOF along \(\Gamma\).
+						We show that 
+					<p/>
+					
+					<p>
+						$$
+							\| \myvector - \Clement \myvector \|_{L^p(T)}
+							\leq 
+							C
+							h_{T}^{r+1}
+							\left( 
+								| \myvector |_{W^{r+1,p}( \Patch )}
+								+
+								| \curl \myvector |_{W^{r,p}( \Patch )}
+							\right)
+							.
+						$$
+					</p>
+
+				</article>
+				
+            </div>
+            
+			
+			
+			<!-- Third column -->
+			<div class=spalte style="width: 30%;">
+				
+				<article style="display: block;">
+					
+					<header>
+						Scott-Zhang Interpolant and generalized broken Bramble-Hilbert lemma
+					</header>
+
+					<p>
+					The Cl&eacute;ment interpolant has homogeneous boundary conditions along \(\Gamma\) "hard-coded".
+					By contrast, the Scott-Zhang interpolant interpolates any boundary values along \(\Gamma\).
+					</p>
+					
+					<p>
+					Our Scott-Zhang interpolant 
+					\(\Scottzhang : \bfH(\curl) \rightarrow \Ned_r(\calT)\)
+					preserves homogeneous tangential boundary conditions along \(\Gamma\),
+					</p>
+					
+					<p>
+					$$
+						\myvector \in \bfH(\curl,\Gamma)
+						\implies
+						\Scottzhang \myvector \in \Ned_r(\calT,\Gamma)
+					$$
+					</p>
+					
+					<p>
+					and satisfies the error estimate 
+					$$
+						\| \myvector - \Scottzhang \myvector \|_{L^{p}\Lambda^{k}(T)}
+						\leq 
+						C
+						h_{T}^{r+1} 
+						\sum_{ \substack{ T' \in \Patch } }
+						\left( 
+							| \myvector |_{W^{r+1,p}(T')}
+							+
+							| \curl \myvector |_{W^{r,p}(T')}
+						\right)  
+					$$
+					whenever
+					$$
+						\myvector 
+						\in
+						\bfH(\curl,\Gamma) 
+						\cap
+						\bigoplus_{ T \in \calT } W^{r+1,p}(T)
+						.
+					$$
+					</p>
+					
+					<p style="border-color: #FF80A5; border-width: 0.25rem; border-style: solid; ; padding: 0.5em"><strong>
+						We get the same approximation power as for vector fields 
+						that are globally in \(W^{r+1,p}\)
+						as long as the vector fields is in \(\bfH(\curl)\)
+						and at least piecewise in \(W^{r+1,p}\).
+					</strong></p>
+		
+				</article>
+				
+				
+				<article style="border-style: solid; border-width: 0.25rem; border-color: #11CFA9; background-color: white;">
+					
+					<header style="background-color: white; color:dimgrey;">
+						Application
+					</header>
+
+					<p style="background-color: auto;">
+						Suppose an \(\bfH(\curl)\) vector field over a physical domain
+						enjoys higher Sobolev regularity.
+						<br/>
+						<br/>
+						If that vector field is transformed onto a parametric domain 
+						for the error analysis of a non-conforming FEM, 
+						the higher regularity is typically only retained piecewise.
+						<br/>
+						<br/>
+						The broken Bramble-Hilbert lemma allows us to exploit that piecewise regularity:
+						we get the same convergence rates as with conforming FEM approximating globally regular vector fields.
+					</p>
+					
+				</article>
+
+				<article>
+					
+					<header>
+						Summary
+					</header>
+
+					<p>
+						More generally than on this poster, we have approached:
+					</p>
+					
+					<ul>
+						<li>Divergence-conforming vector fields and finite element spaces</li>
+						<li>Differential \(k\)-forms in any dimension \(n\), 
+						finite element spaces \(\calP_r\Lambda^k\) and \(\calP_r^-\Lambda^k\).</li>
+						<li>Lebesgue exponents \( p \in [1,\infty] \)</li>
+					</ul>
+					
+					<p>
+						Future additions:
+					</p>
+					
+					<ul>
+						<li>Extension to vector-valued hp-FEM?</li>
+						<li><b>Commuting</b> interpolants satisfying error estimates?</li>
+					</ul>
+					
+				</article>
+
+				<article>
+					
+					<header>
+						Reference
+					</header>
+					
+					<table>
+						<tr>
+							<td width=8%>
+								<img style="height: 4rem; margin: 0 0" src="qrcode.svg" alt="Qr Code" />
+							</td>
+							<td width=2%>
+							
+							</td>
+							<td width=90%>
+								E. Gawlik, M. Holst, M. Licht, <i>Local Finite Element Approximation of Sobolev Differential Forms</i>.
+								<br>
+								Accepted for publication in <i>ESAIM: M2AN</i>. 
+								Arxiv: <a href="https://arxiv.org/abs/2011.00634">https://arxiv.org/abs/2011.00634</a>
+							</td>
+						</tr>
+					</table>
+					
+				</article>            
+            
+			</div>
+            
+        </main>
+
+        <footer role=contentinfo>
+            <div style="display: flex; align-items: center;">
+                <a class="arxivlink" style="margin-right: 1rem; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;" href="https://arxiv.org/abs/2011.00634">
+					https://arxiv.org/abs/2011.00634
+				</a>
+                <img style="height: 2rem; margin: 0 0" src="qrcode.svg" alt="Qr Code" />
+            </div>
+            <div class="email">
+                <span style="color: gray;">Powered by SciPosterHTML</span>
+            </div>
+            <div class="email">
+                <span style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">martin.licht@epfl.ch</span>
+            </div>
+        </footer>
+    </body>
+</html>

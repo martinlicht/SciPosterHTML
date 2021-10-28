@@ -1,0 +1,383 @@
+
+/* GENERAL */
+
+* 
+{
+	box-sizing: border-box; /* not content-box; include padding and border in size calculation */
+}
+
+/* Make sure the full space is used */
+
+body 
+{
+	height: 100%;
+	width: 100%;
+	line-height: 1.20;
+}
+
+
+/* PRINTING */
+
+/* For printing a page, set the size of poster */
+
+@page {
+    
+	size: A4 landscape;
+	
+    /* change the page margins as you wish */
+	/* sizes are in _original_ rem */
+	
+    margin: 1.35rem; 
+	
+}
+
+/* 
+When the page is rendered for printing,
+set the root element font size 'rem' to about 6pt 
+Customize the font size as you need.
+*/
+
+@media print {
+	
+	html 
+	{
+		font-size: 6.40012pt;
+	}
+	
+}
+
+/* 
+When the page is rendered on a screen,
+customize as you need.
+Currently: leave everything as it is.
+*/
+@media screen{
+
+	html 
+	{
+		/* font-size: 12pt; */
+	}
+
+}
+
+
+/* LAYOUT */
+	
+/* https://cssreference.io/flexbox/ */
+
+body 
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+body > header 
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+body > main 
+{
+	flex-grow: 1000;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+	flex-wrap: nowrap;
+	overflow: visible;
+}
+
+body > main > div.spalte 
+{
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+body > footer 
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+@media screen and ( max-width: 100.567rem ) {
+	
+	body 
+	{
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: stretch;
+		align-content: center;
+	}
+
+	body > header 
+	{
+ 		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+	}
+
+	body > main 
+	{
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: stretch;
+		flex-wrap: nowrap;
+		overflow: visible;
+	}
+
+	body > main > div.spalte 
+	{
+		flex-grow: 1;
+		min-width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;	
+	}
+
+	body > footer 
+	{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+	
+}
+
+
+/* BEAUTIFICATION */
+
+/* GENERAL */
+
+/* we remove all padding and margin unless re-introduced explicitly */
+* 
+{
+	margin: 0.0rem;
+	padding: 0.0rem;
+}
+
+/* inherit text color in hyperlinks from parent element */
+/* no text decoration (e.g. underline) for hyperlinks */
+a 
+{
+	color: inherit; 
+	text-decoration: none; 
+}
+
+/* all descendant elements in the main part have round borders by default */
+main * 
+{
+	border-radius: 0.5rem;
+}
+
+
+body > main 
+{
+	padding-top:    0.0rem;
+	padding-bottom: 0.0rem;
+	padding-left:   1.0rem;
+	padding-right:  1.0rem;
+} 
+
+body > main > div.spalte + div.spalte 
+{
+	padding-left: 1.0rem;
+}
+	
+@media screen and ( max-width: 100.567rem ) {
+	
+	body > main > div.spalte + div.spalte 
+	{
+		padding: 0.0rem;
+	}
+	
+}
+
+
+/* FONTS */
+
+body 
+{
+	font-family: 'Roboto Condensed', sans-serif; 
+}
+
+.arxivlink 
+{
+	font-family: "Roboto Mono", monospace;
+}
+
+.email
+{
+	font-family: "Roboto Mono", monospace;
+}
+
+
+/* HEADER */
+
+body > header 
+{
+
+	/* leave some space to the main element below */
+	margin-bottom: 0.5rem;
+
+	padding-top:    0.0rem;
+	padding-bottom: 0.0rem;
+	padding-left:   1.0rem;
+	padding-right:  1.0rem;
+	
+	border-color: #FFE08C;
+	border-style: dashed;
+	border-width: 0.0rem;
+	border-bottom-width: 0.0rem;
+
+	color: black;
+	text-align: center;
+}
+
+
+/* MAIN */
+
+main 
+{
+
+}
+
+article 
+{
+	padding-top:    0.0rem;
+	padding-right:  0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left:   0.5rem;
+
+	background-color: white;
+}
+
+article + article 
+{
+	margin-top: 0.5rem;
+}
+
+
+article > *
+{
+	margin-top:    0.5rem;
+	margin-right:  0.0rem`;
+	margin-bottom: auto;
+	margin-left:   0.0rem;
+}
+
+article > header
+{ 
+	margin-top:     0.0rem;
+	margin-right:  -0.5rem;
+	margin-bottom: auto;
+	margin-left:   -0.5rem;
+	
+	padding-top:    0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left:   0.5rem;
+	padding-right:  0.5rem;
+	
+	background-color: #4189D8; 
+	color: white; 
+	
+	font-size: 1.17rem;
+	font-weight: bold;
+}
+
+
+
+
+/* https://web.dev/css-marker-pseudo-element/ */
+/* https://w3.org/Style/Examples/007/color-bullets.en.html#numbers */
+
+ol 
+{
+	list-style-position: inside;
+	list-style-type: none;
+	counter-reset: choco;
+}
+
+ul 
+{
+	list-style-position: inside;
+	list-style-type: none;
+}
+
+ol > li
+{
+	counter-increment: choco;
+	margin-top:    0.000000rem;
+	margin-bottom: 0.333333rem;
+	margin-left:   1.333333rem;
+	margin-right:  0.000000rem;
+}
+
+ul > li
+{
+	list-style-type: none;
+	margin-top:    0.000000rem;
+	margin-bottom: 0.333333rem;
+	margin-left:   1.333333rem;
+	margin-right:  0.000000rem;
+}
+
+ul > li::before
+{
+	display: inline-block;
+	margin-left:  -1.0rem;
+	margin-right: 0.666666rem;
+	content: "\25AA";
+}
+
+ol > li::before 
+{
+	display: inline-block;
+	margin-left:  -1.0rem;
+	margin-right: 0.666666rem;
+	width: 1rem; /* adapt to number size */
+	
+	font-weight: bold;
+	color: dimgrey; 
+	content: counter(choco) ".";
+	text-align: right;
+}
+
+
+
+/* FOOTER */
+
+body > footer
+{
+	/* leave some space to the main element above */
+	margin-top: 1rem;
+	
+	padding-top:    0.5rem;
+	padding-bottom: 0.0rem;
+	padding-left:   1.0rem; 
+	padding-right:  1.0rem;
+
+	border-style: dashed;
+	border-color: #FFE08C;
+	border-width: 0.0rem;
+	border-top-width: 0.5rem;
+	
+	color: black;
+	text-align: center;
+}
